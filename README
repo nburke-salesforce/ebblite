@@ -1,6 +1,0 @@
-python spaced_repetition.py -h 
-
-learn about mortgage abbreviations to start off by invoking script with 
-mortgage_terms.csv file.
-
-see the grade file grades_of_mbs.csv for an example of how the data is stored.

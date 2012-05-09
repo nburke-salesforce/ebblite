@@ -105,7 +105,8 @@ def write_grade_sheet(prompt_list, topic_name):
 	Use this method at the end of a session, to keep track of things.
 	'''
 	sorted_prompt_list = sorted(prompt_list, key=lambda tpl: tpl[3]) #sort by ebbinghaus score
-	prompt_writer = csv.writer(open("./%s.csv" % topic_name, "wb"))
+	#prompt_writer = csv.writer(open("./%s.csv" % topic_name, "wb"))
+	prompt_writer = csv.writer(open(topic_name, "wb"))
 	for prompt_tuple in prompt_list:
 		prompt_writer.writerow(list(prompt_tuple))
 
@@ -129,7 +130,7 @@ def spaced_repetition(app):
 	else:
 		print "Exiting"
 		if app.params.grade_sheet is None:
-			write_grade_sheet(prompt_list, "grades_of_mbs")
+			write_grade_sheet(prompt_list, "".join(["grades_of_", app.params.answer_sheet]))
 		else:
 			write_grade_sheet(prompt_list, app.params.grade_sheet) 
 		
