@@ -4,3 +4,5 @@ CPR,Conditional Prepayment Rate
 BEEM,Bond Equivalent Effective Margin
 WAC,Weighted Average Coupon
 WAM,Weigted Average Maturity
+WALA,Weighted Average Loan Age
+DV01,Duration--value change per basis point increase

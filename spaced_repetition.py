@@ -11,8 +11,8 @@ def compute_score(prompt_tuple):
 	time_now = time.time()
 
 	prompt = prompt_tuple[0] #string
-	elapsed_time = time_now - prompt_tuple[1] #seconds --float
-	count_correct = prompt_tuple[2] # int
+	elapsed_time = time_now - float(prompt_tuple[1]) #seconds --float
+	count_correct = float(prompt_tuple[2]) # int
 
 	ebb_score = math.exp(-(elapsed_time/count_correct))
 	return ebb_score
@@ -29,7 +29,6 @@ def sort_question_list(prompt_list):
 	It returns the sorted list (ascending) by the new ebbinghaus retention score.
 	'''
 	sorted_question_list = []
-	print prompt_list
 	for prompt_tuple in prompt_list:
 		prompt = prompt_tuple[0] #string
 		time = prompt_tuple[1] #seconds --float
@@ -41,7 +40,6 @@ def sort_question_list(prompt_list):
 		)
 
 	slist = sorted(sorted_question_list, key=lambda tpl: tpl[3], reverse=True) #sort by ebbinghaus score
-	print slist
 	return slist
 
 def grade_question(prompt_tuple, answer_sheet):
@@ -61,7 +59,6 @@ def grade_question(prompt_tuple, answer_sheet):
 		count_correct += 1
 	
 	# Return the prompt_tuple, with count_correct, and the time updated
-	print (prompt, time.time(), count_correct, ebb_score) #note that ebb_score is NOT updated
 	return (prompt, time.time(), count_correct, ebb_score) #note that ebb_score is NOT updated
 
 def lookup_answer(prompt, answer_sheet):
