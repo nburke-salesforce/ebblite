@@ -12,3 +12,4 @@ follow the prompts.
 be honest about whether you got it correct.
 
 try it out with mortgage_terms.csv and get your own personal grade sheet!
+have fun!
