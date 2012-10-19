@@ -3,12 +3,18 @@ import math
 import time
 import csv
 import cli.app
+from pprint import pprint
+def get_days():
+	'''Returns time in days since epoch.'''
+
+	days = time.time()/float(60*60*24)
+	return days
 
 def compute_score(prompt_tuple):
 	'''This method takes a (prompt, time, count_correct, ebb_score) tuple. 
 	It returns the Ebbinghaus Score (a float)'''
 
-	time_now = time.time()
+	time_now = get_days()
 
 	prompt = prompt_tuple[0] #string
 	elapsed_time = time_now - float(prompt_tuple[1]) #seconds --float
@@ -31,8 +37,8 @@ def sort_question_list(prompt_list):
 	sorted_question_list = []
 	for prompt_tuple in prompt_list:
 		prompt = prompt_tuple[0] #string
-		time = prompt_tuple[1] #seconds --float
-		count_correct = prompt_tuple[2] # int
+		time = float(prompt_tuple[1]) #seconds --float
+		count_correct = int(prompt_tuple[2]) # int
 
 		new_ebb_score = compute_score(prompt_tuple)
 		sorted_question_list.append(
@@ -47,19 +53,19 @@ def grade_question(prompt_tuple, answer_sheet):
 	and then returns the updated tuple. It needs an answer sheet.'''
 
 	prompt = prompt_tuple[0] #string
-	last_time = prompt_tuple[1] #seconds --float
-	count_correct = prompt_tuple[2] # int
-	ebb_score = prompt_tuple[3]
+	last_time = float(prompt_tuple[1]) #days --float
+	count_correct = int(prompt_tuple[2]) # int
+	ebb_score = float(prompt_tuple[3])
 
 	print prompt #print the prompt to the question
 	raw_input("Press any key to get the correct answer")
 	print lookup_answer(prompt, answer_sheet)
 	correct = raw_input("Did you get it correct? Y/n" )
-	if correct == "y":
+	if correct in set(["Y", "y"]):
 		count_correct += 1
 	
 	# Return the prompt_tuple, with count_correct, and the time updated
-	return (prompt, time.time(), count_correct, ebb_score) #note that ebb_score is NOT updated
+	return (prompt, get_days(), count_correct, ebb_score) #note that ebb_score is NOT updated
 
 def lookup_answer(prompt, answer_sheet):
 	# answer_sheet is a hash
@@ -85,7 +91,7 @@ def load_grade_sheet(answer_sheet_hash, grade_sheet_csv=None):
 	'''this method takes a hash, answer_sheet, and maybe a grade_sheet_csv
 	If there is no grade_sheet_csv, it makes one out of the answer sheet with very 
 	low ebbinghaus scores. Else, it loads it up'''
-	time_now = time.time()
+	time_now = get_days()
 	grade_sheet = []
 	if grade_sheet_csv is None:
 		for prompt in answer_sheet_hash.keys():
@@ -123,9 +129,13 @@ def spaced_repetition(app):
 	keep_going = raw_input("Do a question? Y/n: ")
 	while keep_going == "Y":
 		question_tuple = pick_question(prompt_list)
+		pprint(prompt_list)
 		graded_question = grade_question(question_tuple, answer_sheet_hash)
-		prompt_list.append(graded_question)
+		pprint(prompt_list)
+		prompt_list.append(tuple([str(elt) for elt in graded_question]))
+		pprint(prompt_list)
 		prompt_list = sort_question_list(prompt_list)
+		pprint(prompt_list)
 		keep_going = raw_input("Do a question? Y/n: ")
 	else:
 		print "Exiting"

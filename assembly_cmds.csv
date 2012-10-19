@@ -1,0 +1,14 @@
+jmp,Direct jump
+jmp *,Indirect jump
+je,Equal/zero
+jne,Not equal/not zero
+js,Negative
+jns,Nonnegative
+jg,Greater (signed >)
+jge,Greater or equal (signed >=)
+jl,Less (signed <)
+jle,Less or equal (signed <=)
+ja,Above (unsigned >)
+jae,Above or equal (unsigned >=)
+jb,Below (unsigned <)
+jbe,Below or equal (unsigned <=)
