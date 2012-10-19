@@ -3,7 +3,7 @@ import math
 import time
 import csv
 import cli.app
-from pprint import pprint
+
 def get_days():
 	'''Returns time in days since epoch.'''
 
@@ -129,13 +129,9 @@ def spaced_repetition(app):
 	keep_going = raw_input("Do a question? Y/n: ")
 	while keep_going == "Y":
 		question_tuple = pick_question(prompt_list)
-		pprint(prompt_list)
 		graded_question = grade_question(question_tuple, answer_sheet_hash)
-		pprint(prompt_list)
 		prompt_list.append(tuple([str(elt) for elt in graded_question]))
-		pprint(prompt_list)
 		prompt_list = sort_question_list(prompt_list)
-		pprint(prompt_list)
 		keep_going = raw_input("Do a question? Y/n: ")
 	else:
 		print "Exiting"
